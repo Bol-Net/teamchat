@@ -69,3 +69,5 @@ gem 'dotenv-rails'
 gem 'grpc'
 gem 'grpc-tools'
 gem "google-protobuf"
+
+gem 'redis'

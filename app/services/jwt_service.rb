@@ -6,11 +6,19 @@ class JwtService
   REFRESH_EXP = 30.days
 
   def self.private_key
-    @private_key ||= OpenSSL::PKey::RSA.new(ENV.fetch('JWT_PRIVATE_KEY'))
+    #@private_key ||= OpenSSL::PKey::RSA.new(ENV.fetch('JWT_PRIVATE_KEY'))
+    @private_key ||= begin
+      path = Rails.root.join('jwt_private.pem')
+      OpenSSL::PKey::RSA.new(File.read(path))
+    end
   end
 
   def self.public_key
-    @public_key ||= OpenSSL::PKey::RSA.new(ENV.fetch('JWT_PUBLIC_KEY'))
+    #@public_key ||= OpenSSL::PKey::RSA.new(ENV.fetch('JWT_PUBLIC_KEY'))
+    @public_key ||= begin
+      path = Rails.root.join('jwt_public.pem')
+      OpenSSL::PKey::RSA.new(File.read(path))
+    end
   end
 
   def self.issue_access_token(user, extra = {})

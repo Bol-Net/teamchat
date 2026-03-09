@@ -22,6 +22,7 @@ Rails.application.routes.draw do
       post "auth/refresh", to: "auth#refresh"
       post "auth/logout", to: "auth#logout"
       get  "auth/me", to: "auth#me"
+      post "auth/verify", to: "auth#verify"
     end
   end
 end

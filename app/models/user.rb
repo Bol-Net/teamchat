@@ -10,4 +10,20 @@ class User < ApplicationRecord
 
   validates :name, presence: true
   # Note: email and password validations are handled by Devise
+  
+
+  after_commit :publish_user_created, on: :create
+
+
+  def publish_user_created
+    payload = {
+      event: "user_created",
+      id: id,
+      name: name,
+      email: email,
+      role: role
+    }
+
+    $redis.publish("user_events", payload.to_json)
+  end
 end
